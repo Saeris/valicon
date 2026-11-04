@@ -33,3 +33,7 @@ coverage/
 *.tsbuildinfo
 # Library pack artifact (created transiently during publish)
 *.tgz
+
+# deoptkit
+.deopt/*
+!.deopt/baselines/

@@ -8,7 +8,7 @@ jobs:
   bumpy-check:
     name: Release Plan
     # The template is never released, so its PRs carry no bump files.
-    if: github.repository != 'Saeris/library-template'
+    if: github.repository == 'Saeris/valicon'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
