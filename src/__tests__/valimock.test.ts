@@ -4,6 +4,7 @@ import { Valimock } from "valimock";
 import { readLexiconFixtures } from "./fixtures/lexicons.js";
 import { resolvePlaceholder } from "./fixtures/samples.js";
 import { compileLexicons } from "../methods/compileLexicon.js";
+import { bytes } from "../schemas/bytes.js";
 import {
   CID_REGEX,
   DATETIME_REGEX,
@@ -18,10 +19,11 @@ describe("lexiconMocks", () => {
   const compiled = compileLexicons(readLexiconFixtures(), {
     resolve: resolvePlaceholder
   });
+  const warnings: string[] = [];
   const mock = new Valimock({
     ...lexiconMocks,
     seed: 42,
-    onWarn: () => {}
+    onWarn: (warning) => warnings.push(warning)
   }).mock;
 
   const schemas = Object.entries(compiled).flatMap(([nsid, defs]) =>
@@ -32,13 +34,37 @@ describe("lexiconMocks", () => {
   );
 
   // Every schema compiled from a real Lexicon must produce mocks that pass
-  // its own validation, otherwise the mocks are useless as test data.
+  // its own validation, otherwise the mocks are useless as test data. A
+  // warning means Valimock exhausted its retry budget on some field, which
+  // is both a generator that disagrees with the schema and the slow path
+  // that made this suite time out.
   it.each(schemas)("should mock valid data for %s", (_name, schema) => {
+    warnings.length = 0;
     for (let round = 0; round < 3; round++) {
       const value: unknown = mock(schema);
       const result = v.safeParse(schema, value);
       expect(result.issues ?? []).toStrictEqual([]);
     }
+    expect(warnings).toStrictEqual([]);
+  });
+
+  it("should keep bytes mocks small and within Lexicon limits", () => {
+    // `com.atproto.sync.subscribeRepos#commit` allows a 2 MB CAR file. A mock
+    // that size is useless as test data and far exceeds Valimock's string
+    // bound, which it would then retry sixteen times per field.
+    warnings.length = 0;
+    const large = mock(bytes({ maxLength: 2_000_000 }));
+    expect(large.$bytes.length).toBeLessThanOrEqual(128);
+    // A minimum above the string bound must still be honored rather than
+    // reported as unsatisfiable.
+    const small = mock(bytes({ minLength: 200, maxLength: 300 }));
+    expect(small.$bytes.length).toBeGreaterThanOrEqual(
+      Math.ceil((200 * 4) / 3)
+    );
+    expect(
+      v.safeParse(bytes({ minLength: 200, maxLength: 300 }), small).success
+    ).toBe(true);
+    expect(warnings).toStrictEqual([]);
   });
 
   it("should generate realistic identifiers", () => {
