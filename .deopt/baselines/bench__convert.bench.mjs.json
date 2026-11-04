@@ -1,0 +1,642 @@
+{
+  "createdAt": "2026-11-04T19:23:01.733Z",
+  "script": "bench/convert.bench.mjs",
+  "findings": [
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"type\" went megamorphic (36 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|wrapProperty|default",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "wrapProperty",
+      "summary": "LoadIC for property \"default\" went megamorphic (21 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|minLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"minLength\" went megamorphic (18 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|knownValues",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"knownValues\" went megamorphic (18 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (18 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|enum",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"enum\" went megamorphic (17 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|format",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"format\" went megamorphic (17 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|maxLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"maxLength\" went megamorphic (17 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|minGraphemes",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"minGraphemes\" went megamorphic (17 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|maxGraphemes",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"maxGraphemes\" went megamorphic (17 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|const",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"const\" went megamorphic (16 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|defExpr|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "defExpr",
+      "summary": "LoadIC for property \"type\" went megamorphic (11 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|fromLexicon|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "fromLexicon",
+      "summary": "LoadIC for property \"description\" went megamorphic (9 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|unwrapProperty|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "unwrapProperty",
+      "summary": "LoadIC for property \"type\" went megamorphic (9 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|arrayExpr|minLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "arrayExpr",
+      "summary": "LoadIC for property \"minLength\" went megamorphic (8 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|arrayExpr|maxLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "arrayExpr",
+      "summary": "LoadIC for property \"maxLength\" went megamorphic (8 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|arrayExpr|items",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "arrayExpr",
+      "summary": "LoadIC for property \"items\" went megamorphic (8 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|arrayExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "arrayExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (8 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|isCompiledDefinition|kind",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "isCompiledDefinition",
+      "summary": "LoadIC for property \"kind\" went megamorphic (7 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertArray|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertArray",
+      "summary": "LoadIC for property \"type\" went megamorphic (7 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|withDescription|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "withDescription",
+      "summary": "StoreIC for property \"description\" went megamorphic (7 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|evaluate|kind",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "evaluate",
+      "summary": "LoadIC for property \"kind\" went megamorphic (6 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "StoreIC for property \"description\" went megamorphic (6 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|wrapProperty|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "wrapProperty",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|objectExpr|properties",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "objectExpr",
+      "summary": "LoadIC for property \"properties\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|objectExpr|required",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "objectExpr",
+      "summary": "LoadIC for property \"required\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|objectExpr|nullable",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "objectExpr",
+      "summary": "LoadIC for property \"nullable\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|objectExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "objectExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|print|kind",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "print",
+      "summary": "LoadIC for property \"kind\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|isObjectLike|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "isObjectLike",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|resolveLazy|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "resolveLazy",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|getDefinitionRef|id",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "getDefinitionRef",
+      "summary": "LoadIC for property \"id\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|getDefinitionRef|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "getDefinitionRef",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertInline|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertInline",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|enum",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"enum\" went megamorphic (3 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|const",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"const\" went megamorphic (3 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (3 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (3 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (3 recorded transitions)"
+    },
+    {
+      "identity": "map-churn|file:///C:/GitHub/@saeris/valicon/dist/index.mjs||at-identifier,at-uri,atIdentifier,atUri,at_identifier,at_uri,blob,bytes,cid,cidLink,datetime,did,did_plc,did_web,handle,id,knownValues,language,nsid,procedure,query,record,record-key,recordKey,record_key,subscription,tid,token,union,unknown,uri",
+      "kind": "map-churn",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "",
+      "summary": "54 map transitions created in one function (properties: atIdentifier, atUri, blob, bytes, cid, cidLink, datetime, did, … +23 more)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (2 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs|getTypeName|$type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs",
+      "functionName": "getTypeName",
+      "summary": "LoadIC for property \"$type\" went megamorphic (61 recorded transitions)"
+    },
+    {
+      "identity": "deopt-loop|file:///C:/GitHub/@saeris/valicon/dist/index.mjs||Insufficient type feedback for generic named access,wrong map",
+      "kind": "deopt-loop",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "summary": "2 eager deopts at the same position (Insufficient type feedback for generic named access; wrong map)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|const",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"const\" went megamorphic (1 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "LoadIC for property \"description\" went megamorphic (1 recorded transitions)"
+    },
+    {
+      "identity": "map-churn|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|description,format,knownValues,maxGraphemes,maxLength",
+      "kind": "map-churn",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "10 map transitions created in one function (properties: description, maxLength, knownValues, maxGraphemes, format)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|prop|kind",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "prop",
+      "summary": "KeyedLoadIC for property \"kind\" went megamorphic (23 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "map-churn|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertObject|nullable,properties,required",
+      "kind": "map-churn",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertObject",
+      "summary": "7 map transitions created in one function (properties: properties, required, nullable)"
+    },
+    {
+      "identity": "map-churn|file:///C:/GitHub/@saeris/valicon/bench/convert.bench.mjs||accent,accentForeground,accentForegroundRGB,accentRGB,accept,acceptsInteractions,account,action,active,actors,adultOnly,alt,aspectRatio,associatedProfiles,associatedRefs,author,avatar,b,background,backgroundRGB,banner,blobs,blocked,blockedAuthor,blockedPost,blocks,blurs,bookmarkCount,bookmarked,by,byteEnd,byteSlice,byteStart,cid,clickthroughAuthor,clickthroughEmbed,clickthroughItem,clickthroughReposter,closed,collection,colorRGB,commit,commitMeta,const,contentMode,contentModeUnspecified,contentModeVideo,count,create,createResult,createdAt,creator,cts,cursor,debug,default,defaultSetting,defs,delete,deleteResult,description,descriptionFacets,detached,did,displayName,embed,embeddingDisabled,embeds,encoding,end,endedAt,entities,entity,errors,event,exp,external,facets,features,feedContext,feedViewPost,foreground,foregroundRGB,format,fullsize,g,generatorView,generatorViewerState,grandparentAuthor,handle,height,icon,id,identifier,identity,image,images,index,indexedAt,info,input,interaction,interactionLike,interactionQuote,interactionReply,interactionRepost,interactionSeen,interactionShare,item,items,iterations,joinedViaStarterPack,key,knownLikers,knownValues,label,labelValue,labelValueDefinition,labelValueDefinitionStrings,labels,lang,langs,lexicon,like,likeCount,likers,link,links,lists,locales,logo,main,maxGraphemes,maxLength,maxSize,maximum,media,mention,message,minLength,minimum,name,neg,notFound,notFoundPost,nullable,opThreadPostCount,opThreadPostIndex,ops,output,parameters,parent,path,pinned,pinnedPost,post,postView,posts,prev,prevData,pronouns,properties,publisher,quoteCount,r,readingTime,reason,reasonPin,reasonRepost,rebase,record,ref,refs,replies,reply,replyCount,replyDisabled,replyRef,repo,repoOp,repost,repostCount,reqId,requestLess,requestMore,required,resolve,results,rev,rkey,root,rootAuthorLike,schema,selfLabel,selfLabels,seq,severity,sig,since,skeletonFeedPost,skeletonReasonPin,skeletonReasonRepost,source,src,start,startedAt,status,subject,subscribers,subscriptionCount,swapCommit,sync,tag,tags,text,textSlice,theme,threadContext,threadMuted,threadViewPost,threadgate,threadgateView,thumb,thumbnail,time,title,tooBig,type,update,updateResult,updatedAt,uri,uris,url,val,validate,validationStatus,value,values,ver,via,view,viewArticle,viewArticlePublication,viewArticlePublicationTheme,viewBlocked,viewDetached,viewExternal,viewExternalSource,viewExternalSourceTheme,viewGallery,viewGalleryImage,viewImage,viewLivestream,viewNotFound,viewRecord,viewer,viewerState,website,width,writes",
+      "kind": "map-churn",
+      "file": "file:///C:/GitHub/@saeris/valicon/bench/convert.bench.mjs",
+      "functionName": "",
+      "summary": "486 map transitions created in one function (properties: type, maxGraphemes, maxLength, description, format, accept, maxSize, refs, … +253 more)"
+    },
+    {
+      "identity": "map-churn|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|withDescription|description",
+      "kind": "map-churn",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "withDescription",
+      "summary": "3 map transitions created in one function (properties: description)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs|getPipeItems|pipe",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs",
+      "functionName": "getPipeItems",
+      "summary": "LoadIC for property \"pipe\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs|isSchemaLike|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs",
+      "functionName": "isSchemaLike",
+      "summary": "LoadIC for property \"type\" went megamorphic (5 recorded transitions)"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|isCompiledDefinition|kind",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "isCompiledDefinition",
+      "summary": "KeyedLoadIC for property \"kind\" went megamorphic (5 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|isAction|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "isAction",
+      "summary": "KeyedLoadIC for property \"type\" went megamorphic (3 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.images",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.embed.images\" went megamorphic (2 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|prop|minLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "prop",
+      "summary": "KeyedLoadIC for property \"minLength\" went megamorphic (2 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|refExpr|viewArticlePublication",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "refExpr",
+      "summary": "KeyedLoadIC for property \"viewArticlePublication\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|typeExpr|datetime",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "typeExpr",
+      "summary": "KeyedLoadIC for property \"datetime\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|visit|viewArticlePublication",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "visit",
+      "summary": "KeyedLoadIC for property \"viewArticlePublication\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|resolve|com.atproto.label.defs",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "resolve",
+      "summary": "KeyedLoadIC for property \"com.atproto.label.defs\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|resolve|label",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "resolve",
+      "summary": "KeyedLoadIC for property \"label\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.record",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.embed.record\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.record",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedStoreIC for property \"app.bsky.embed.record\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.recordWithMedia",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.embed.recordWithMedia\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.feed.defs",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.feed.defs\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.feed.getPosts",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.feed.getPosts\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.feed.post",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.feed.post\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.graph.follow",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.graph.follow\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.richtext.facet",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.richtext.facet\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.label.defs",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.label.defs\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.repo.applyWrites",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.repo.applyWrites\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.repo.createRecord",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.repo.createRecord\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.repo.defs",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.repo.defs\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.repo.strongRef",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.repo.strongRef\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|com.atproto.sync.subscribeRepos",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"com.atproto.sync.subscribeRepos\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.actor.profile",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.actor.profile\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.defs",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.embed.defs\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|compileLexicons|app.bsky.embed.external",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "compileLexicons",
+      "summary": "KeyedLoadIC for property \"app.bsky.embed.external\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|fromLexicon|viewImage",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "fromLexicon",
+      "summary": "KeyedLoadIC for property \"viewImage\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|prop|key",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "prop",
+      "summary": "KeyedLoadIC for property \"key\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|prop|maxLength",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "prop",
+      "summary": "KeyedLoadIC for property \"maxLength\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|prop|knownValues",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "prop",
+      "summary": "KeyedLoadIC for property \"knownValues\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertArray|item",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertArray",
+      "summary": "KeyedLoadIC for property \"item\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|getKnownValues|lexicon",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "getKnownValues",
+      "summary": "KeyedLoadIC for property \"lexicon\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|description",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "KeyedLoadIC for property \"description\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|max_bytes",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "KeyedLoadIC for property \"max_bytes\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|max_graphemes",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "KeyedLoadIC for property \"max_graphemes\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/index.mjs|convertString|metadata",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/index.mjs",
+      "functionName": "convertString",
+      "summary": "KeyedLoadIC for property \"metadata\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs|getPipeItems|pipe",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs",
+      "functionName": "getPipeItems",
+      "summary": "KeyedLoadIC for property \"pipe\" went megamorphic (5 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs|isSchemaLike|type",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/dist/union-Bw9UnzYn.mjs",
+      "functionName": "isSchemaLike",
+      "summary": "KeyedLoadIC for property \"type\" went megamorphic (5 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    },
+    {
+      "identity": "megamorphic-ic|file:///C:/GitHub/@saeris/valicon/bench/convert.bench.mjs|observed.iterations|app.bsky.richtext.facet",
+      "kind": "megamorphic-ic",
+      "file": "file:///C:/GitHub/@saeris/valicon/bench/convert.bench.mjs",
+      "functionName": "observed.iterations",
+      "summary": "KeyedLoadIC for property \"app.bsky.richtext.facet\" went megamorphic (1 recorded transitions) — keyed/dynamic access, often inherent to generic dispatch"
+    }
+  ]
+}

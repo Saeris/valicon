@@ -1,14 +1,24 @@
 {
-  "name": "library-template",
+  "name": "@saeris/valicon",
   "version": "0.0.0",
-  "description": "A minimal repo configured with modern JavaScript tooling to scaffold new libraries",
-  "keywords": [],
-  "homepage": "https://github.com/Saeris/library-template#readme",
+  "description": "Valibot schemas, codegen, and mocking utilities for AT Protocol Lexicons",
+  "keywords": [
+    "valibot",
+    "atproto",
+    "at-protocol",
+    "lexicon",
+    "bluesky",
+    "schema",
+    "validation",
+    "codegen",
+    "valimock"
+  ],
+  "homepage": "https://github.com/Saeris/valicon#readme",
   "license": "MIT",
   "author": "Drake Costa <drake@saeris.io> (https://saeris.gg)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Saeris/library-template.git"
+    "url": "git+https://github.com/Saeris/valicon.git"
   },
   "files": [
     "dist"
@@ -19,6 +29,10 @@
     ".": {
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
+    },
+    "./valimock": {
+      "types": "./dist/valimock.d.mts",
+      "default": "./dist/valimock.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -32,12 +46,29 @@
     "environment": "publish",
     "publish": true
   },
+  "peerDependencies": {
+    "@faker-js/faker": ">=9.0.0",
+    "valibot": "^1.5.0",
+    "valimock": ">=1.6.0"
+  },
+  "peerDependenciesMeta": {
+    "@faker-js/faker": {
+      "optional": true
+    },
+    "valimock": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "@saeris/configs": "^1.6.1",
     "@types/node": "^26.6.6",
     "@varlock/bumpy": "^1.19.0",
     "@vitest/coverage-v8": "catalog:",
+    "deoptkit": "^0.1.0",
     "typescript": "^6.0.3",
+    "valibot": "^1.5.0",
+    "valimock": "^1.6.0",
     "vite-plus": "catalog:",
     "vitest": "catalog:"
   },

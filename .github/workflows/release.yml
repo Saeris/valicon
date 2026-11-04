@@ -12,7 +12,7 @@ jobs:
   plan:
     name: Plan
     # Repos created from this template release themselves; the template never does.
-    if: github.repository != 'Saeris/library-template'
+    if: github.repository == 'Saeris/valicon'
     runs-on: ubuntu-latest
     permissions:
       contents: read

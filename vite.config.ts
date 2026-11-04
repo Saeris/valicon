@@ -9,12 +9,17 @@ export default defineConfig({
   run: {
     tasks: {
       build: { command: "vp pack", cache: true },
-      dev: { command: "vp pack --watch", cache: false }
+      dev: { command: "vp pack --watch", cache: false },
+      bench: {
+        command:
+          "vp pack && deoptkit ci bench/validate.bench.mjs bench/convert.bench.mjs",
+        cache: false
+      }
     }
   },
   // ── Builds (tsdown) ─────────────────────────────────────────────────
   pack: {
-    entry: "src/index.ts",
+    entry: { index: "src/index.ts", valimock: "src/valimock.ts" },
     clean: true,
     format: [`esm`],
     dts: true,

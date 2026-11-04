@@ -73,18 +73,7 @@ Do not hard-wrap lines in markdown-format text: markdown files, code comments, a
 
 # First-Time Setup
 
-This repo is a GitHub template. If `name` in `package.json` is still `library-template` and the repo is not `Saeris/library-template`, this is a fresh clone: offer to walk the user through these steps before starting other work. Delete this section once setup is finished.
-
-## 1. Rename the project
-
-Ask the user for the package name, a description, and the owner details, then replace the placeholders:
-
-- `package.json`: `name`, `description`, `keywords`, `homepage`, `repository`, `author`
-- `README.md`: title, tagline, install command, badge links, and the license line
-- `LICENSE.md` (copyright holder) and `.github/FUNDING.yml`
-- `.github/workflows/release.yml` and `.github/workflows/bumpy-check.yml`: change `github.repository != 'Saeris/library-template'` to `github.repository == '<owner>/<repo>'`. The `!=` form only stops the template itself from releasing; the `==` form also stops forks of the new library from running the release workflow.
-
-Then search the repo for `library-template`, `Saeris`, and `Drake Costa` to confirm nothing was missed.
+The project has been renamed from the library template (step 1 of the template setup). The remaining steps need the owner of the repository and have not been done yet. Delete this section once they are finished.
 
 ## 2. Claim the package on npm
 
