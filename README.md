@@ -169,12 +169,12 @@ if (post.kind === "schema") {
 import { Valimock } from "valimock";
 import { lexiconMocks } from "@saeris/valicon/valimock";
 
-const mock = new Valimock({ customMocks: lexiconMocks });
+const mock = new Valimock({ ...lexiconMocks, seed: 42 });
 mock.mock(post);
 // { $type: "app.bsky.feed.post", text: "...", createdAt: "2024-...", reply: { root: { uri: "at://did:plc:...", cid: "bafyrei..." } } }
 ```
 
-DIDs, handles, TIDs, CIDs, AT URIs and timestamps come out looking real, `knownValues` and `accept` lists are honored, and unions always produce one of their declared variants. The generators (`mockDid()`, `mockHandle()`, `mockTid()`, ...) are exported for direct use.
+DIDs, handles, TIDs, CIDs, AT URIs and timestamps come out looking real, `knownValues` and `accept` lists are honored, and unions always produce one of their declared variants. `lexiconMocks` is a set of Valimock options (`stringActions`, `stringFormats` and a `lazy` custom mock), so it spreads alongside your own; the generators (`mockDid()`, `mockHandle()`, `mockTid()`, ...) are exported for direct use. Requires Valimock 1.7.1 or newer.
 
 ## 🎛 Configuration
 

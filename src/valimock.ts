@@ -1,7 +1,11 @@
 import type { Faker } from "@faker-js/faker";
 import type * as v from "valibot";
-import { Valimock, type ValimockOptions } from "valimock";
-import { BYTES_REGEX } from "./regex.js";
+import type {
+  MockFunction,
+  StringActionHandler,
+  StringFormatGenerator,
+  ValimockOptions
+} from "valimock";
 import {
   getTypeName,
   getUnionOptions,
@@ -11,8 +15,7 @@ import {
   BASE32_ALPHABET,
   encodeBase32,
   encodeTid,
-  getLexiconMetadata,
-  getPipeItems
+  getLexiconMetadata
 } from "./utils/index.js";
 
 /**
@@ -254,207 +257,143 @@ function capitalize(word: string): string {
 }
 
 /**
- * Valimock instances derived from the options of a calling instance, so that
- * nested schemas can be mocked with the same configuration.
+ * The Valimock format name for each Valicon string action type.
  */
-const instances = new WeakMap<ValimockOptions, Valimock>();
+const FORMATS: Readonly<Record<string, string>> = {
+  at_identifier: "at_identifier",
+  at_uri: "at_uri",
+  cid: "cid",
+  datetime: "datetime",
+  did: "did",
+  did_plc: "did",
+  did_web: "did_web",
+  handle: "handle",
+  language: "language",
+  nsid: "nsid",
+  record_key: "tid",
+  tid: "tid",
+  uri: "uri"
+};
 
 /**
- * Returns a Valimock instance that mocks with the given options, keeping
- * these hooks for nested schemas.
+ * Reads the `requirement` of a pipeline action, if any.
  *
- * @param options The options of the calling instance.
+ * @param action The action.
  *
- * @returns The instance.
+ * @returns The requirement.
  */
-function instanceFor(options: ValimockOptions): Valimock {
-  let instance = instances.get(options);
-  if (!instance) {
-    instance = new Valimock(options);
-    // Nested instances must not reseed, or every nested value would repeat.
-    delete instance.options.seed;
-    instances.set(options, instance);
-  }
-  return instance;
+function requirementOf(action: unknown): unknown {
+  return typeof action === "object" &&
+    action !== null &&
+    "requirement" in action
+    ? action.requirement
+    : null;
 }
 
 /**
- * Valimock instances that fall back to the built-in string generator.
+ * Valimock string action handlers for every Valicon action.
+ *
+ * Each handler names the format a `stringFormats` generator produces, and
+ * `accept` and the decoded byte length actions stash their requirement on
+ * `ctx.custom` for the generator. The `metadata` handler turns Lexicon
+ * `knownValues` into an allow-list, so fields such as label values pick one
+ * of their known names instead of a random word.
  */
-const fallbacks = new WeakMap<ValimockOptions, Valimock>();
-
-/**
- * Returns a Valimock instance without the string hook, for strings that
- * carry no Lexicon format.
- *
- * @param options The options of the calling instance.
- *
- * @returns The instance.
- */
-function fallbackFor(options: ValimockOptions): Valimock {
-  let instance = fallbacks.get(options);
-  if (!instance) {
-    instance = new Valimock({
-      ...options,
-      customMocks: Object.fromEntries(
-        Object.entries(options.customMocks).filter(([key]) => key !== "string")
-      )
-    });
-    delete instance.options.seed;
-    fallbacks.set(options, instance);
-  }
-  return instance;
-}
-
-/**
- * Pipeline action interface.
- */
-interface Action {
-  readonly type: string;
-  readonly requirement?: unknown;
-}
-
-/**
- * Returns the actions of every nested pipeline of a schema.
- *
- * @param schema The schema.
- *
- * @returns The actions.
- */
-function getActions(schema: object): Action[] {
-  const [base, ...rest] = getPipeItems(schema);
-  const actions = rest.filter(
-    (item): item is Action =>
-      typeof item === "object" &&
-      item !== null &&
-      "type" in item &&
-      typeof item.type === "string"
-  );
-  return base !== schema && typeof base === "object" && base !== null
-    ? [...getActions(base), ...actions]
-    : actions;
-}
-
-/**
- * Mocks a string schema, generating realistic values for Lexicon formats.
- *
- * @param schema The string schema.
- * @param options The Valimock options.
- *
- * @returns The mock value.
- */
-function mockString(
-  schema: v.GenericSchema | v.GenericSchemaAsync,
-  options?: ValimockOptions
-): unknown {
-  if (!options) {
-    throw new Error("Valimock options are required");
-  }
-  const { faker } = options;
-  const metadata = getLexiconMetadata(schema);
-  if (
-    metadata &&
-    "knownValues" in metadata &&
-    metadata.knownValues.length > 0
-  ) {
-    return faker.helpers.arrayElement(metadata.knownValues);
-  }
-  const actions = getActions(schema);
-  let minDecodedBytes: number | undefined;
-  let maxDecodedBytes: number | undefined;
-  let isBytes = false;
-  for (const action of actions) {
-    switch (action.type) {
-      case "did":
-      case "did_plc": {
-        return mockDid(faker);
-      }
-      case "did_web": {
-        return mockDidWeb(faker);
-      }
-      case "handle": {
-        return mockHandle(faker);
-      }
-      case "at_identifier": {
-        return mockAtIdentifier(faker);
-      }
-      case "nsid": {
-        return mockNsid(faker);
-      }
-      case "tid":
-      case "record_key": {
-        return mockTid(faker);
-      }
-      case "cid": {
-        return mockCid(faker);
-      }
-      case "datetime": {
-        return mockDatetime(faker);
-      }
-      case "language": {
-        return mockLanguage(faker);
-      }
-      case "at_uri": {
-        return mockAtUri(faker);
-      }
-      case "uri": {
-        return mockUri(faker);
-      }
-      case "accept": {
-        return mockMimeType(
-          faker,
-          Array.isArray(action.requirement) ? action.requirement : []
-        );
-      }
-      case "regex": {
-        isBytes ||= action.requirement === BYTES_REGEX;
-        break;
-      }
-      case "min_decoded_bytes": {
-        if (typeof action.requirement === "number") {
-          minDecodedBytes = action.requirement;
+export const stringActions: Readonly<Record<string, StringActionHandler>> = {
+  ...Object.fromEntries(
+    Object.entries(FORMATS).map(
+      ([type, format]): [string, StringActionHandler] => [
+        type,
+        (ctx) => {
+          ctx.format = format;
         }
-        break;
-      }
-      case "max_decoded_bytes": {
-        if (typeof action.requirement === "number") {
-          maxDecodedBytes = action.requirement;
-        }
-        break;
-      }
-      default: {
-        break;
-      }
+      ]
+    )
+  ),
+  accept: (ctx, action) => {
+    ctx.format = "mime_type";
+    ctx.custom.accept = requirementOf(action);
+  },
+  min_decoded_bytes: (ctx, action) => {
+    ctx.format = "bytes";
+    ctx.custom.minDecodedBytes = requirementOf(action);
+  },
+  max_decoded_bytes: (ctx, action) => {
+    ctx.format = "bytes";
+    ctx.custom.maxDecodedBytes = requirementOf(action);
+  },
+  metadata: (ctx, action) => {
+    const metadata = getLexiconMetadata({ pipe: [null, action] });
+    if (
+      metadata &&
+      "knownValues" in metadata &&
+      metadata.knownValues.length > 0
+    ) {
+      ctx.allowedValues = metadata.knownValues;
     }
   }
-  if (isBytes) {
-    return mockBytes(faker, minDecodedBytes, maxDecodedBytes);
-  }
-  return fallbackFor(options).mock(schema);
-}
+};
 
 /**
- * Mocks a lazy schema, picking a declared variant for `union()` schemas.
+ * Valimock string format generators for the formats `stringActions` name.
+ */
+export const stringFormats: Readonly<Record<string, StringFormatGenerator>> = {
+  at_identifier: (ctx) => mockAtIdentifier(ctx.faker),
+  at_uri: (ctx) => mockAtUri(ctx.faker),
+  bytes: (ctx) =>
+    mockBytes(
+      ctx.faker,
+      typeof ctx.custom.minDecodedBytes === "number"
+        ? ctx.custom.minDecodedBytes
+        : 0,
+      typeof ctx.custom.maxDecodedBytes === "number"
+        ? ctx.custom.maxDecodedBytes
+        : 64
+    ),
+  cid: (ctx) => mockCid(ctx.faker),
+  datetime: (ctx) => mockDatetime(ctx.faker),
+  did: (ctx) => mockDid(ctx.faker),
+  did_web: (ctx) => mockDidWeb(ctx.faker),
+  handle: (ctx) => mockHandle(ctx.faker),
+  language: (ctx) => mockLanguage(ctx.faker),
+  mime_type: (ctx) =>
+    mockMimeType(
+      ctx.faker,
+      Array.isArray(ctx.custom.accept)
+        ? ctx.custom.accept.filter(
+            (pattern): pattern is string => typeof pattern === "string"
+          )
+        : []
+    ),
+  nsid: (ctx) => mockNsid(ctx.faker),
+  tid: (ctx) => mockTid(ctx.faker),
+  uri: (ctx) => mockUri(ctx.faker)
+};
+
+/**
+ * Mocks a lazy schema, always picking a declared variant for `union()`
+ * schemas so that mocks carry a real `$type` rather than an unknown one.
  *
  * @param schema The lazy schema.
  * @param options The Valimock options.
+ * @param mock The mock function of the calling instance.
  *
  * @returns The mock value.
  */
 function mockLazy(
   schema: v.GenericSchema | v.GenericSchemaAsync,
-  options?: ValimockOptions
+  options?: ValimockOptions,
+  mock?: MockFunction
 ): unknown {
-  if (!options) {
-    throw new Error("Valimock options are required");
+  if (!options || !mock) {
+    throw new Error("Valicon mocks require Valimock 1.7 or newer");
   }
-  const instance = instanceFor(options);
   const unionOptions = getUnionOptions(schema);
   if (getLexiconMetadata(schema)?.type === "union" && unionOptions.length > 0) {
     const option = resolveUnionOption(
       options.faker.helpers.arrayElement(unionOptions)
     );
-    const mocked: unknown = instance.mock(option);
+    const mocked: unknown = mock(option);
     return {
       $type: getTypeName(option),
       ...(typeof mocked === "object" && mocked !== null ? mocked : {})
@@ -465,36 +404,40 @@ function mockLazy(
     if (typeof inner === "object" && inner !== null && "kind" in inner) {
       // The getter of a lazy schema always returns a schema.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      return instance.mock(inner as v.GenericSchema);
+      return mock(inner as v.GenericSchema);
     }
   }
   throw new Error("Unable to resolve lazy schema");
 }
 
 /**
- * Custom mocks that teach [Valimock](https://github.com/Saeris/valimock) to
- * generate realistic atproto data.
+ * Valimock options that teach [Valimock](https://github.com/Saeris/valimock)
+ * to generate realistic atproto data.
  *
- * Spread this into the `customMocks` option of a Valimock instance. Strings
- * validated with a Valicon format action (`did()`, `handle()`, `datetime()`,
- * ...) receive values that look like real identifiers instead of random
- * words, `knownValues()` are honored, `blob()` MIME types match their
- * `accept` list, `bytes()` produce base64, and `union()` schemas always
+ * Spread these into the options of a Valimock instance. Strings validated
+ * with a Valicon format action (`did()`, `handle()`, `datetime()`, ...)
+ * receive values that look like real identifiers instead of random words,
+ * `knownValues()` are honored, `blob()` MIME types match their `accept` list,
+ * `bytes()` produce base64 of the right size, and `union()` schemas always
  * produce one of their declared variants with the right `$type`.
  *
- * Hint: Any string without a Lexicon format falls back to the default
- * Valimock generator, so the usual `stringMap` and key name heuristics still
- * apply.
+ * Hint: The three tables (`stringActions`, `stringFormats` and
+ * `customMocks`) are also exported separately so they can be merged with
+ * your own entries.
  *
  * @example
  * ```ts
  * import { Valimock } from "valimock";
  * import { lexiconMocks } from "@saeris/valicon/valimock";
  *
- * const mock = new Valimock({ customMocks: lexiconMocks }).mock(post);
+ * const mock = new Valimock({ ...lexiconMocks, seed: 42 }).mock(post);
  * ```
  */
-export const lexiconMocks: ValimockOptions["customMocks"] = {
-  string: mockString,
-  lazy: mockLazy
+export const lexiconMocks: Pick<
+  Partial<ValimockOptions>,
+  "customMocks" | "stringActions" | "stringFormats"
+> = {
+  stringActions,
+  stringFormats,
+  customMocks: { lazy: mockLazy }
 };

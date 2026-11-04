@@ -19,7 +19,7 @@ describe("lexiconMocks", () => {
     resolve: resolvePlaceholder
   });
   const mock = new Valimock({
-    customMocks: lexiconMocks,
+    ...lexiconMocks,
     seed: 42,
     onWarn: () => {}
   }).mock;
