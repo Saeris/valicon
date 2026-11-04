@@ -523,6 +523,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@saeris/valicon@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@saeris/valicon@workspace:."
+  dependencies:
+    "@faker-js/faker": "npm:^10.6.0"
+    "@saeris/configs": "npm:^1.6.1"
+    "@types/node": "npm:^26.6.6"
+    "@varlock/bumpy": "npm:^1.19.0"
+    "@vitest/coverage-v8": "catalog:"
+    deoptkit: "npm:^0.1.0"
+    typescript: "npm:^6.0.3"
+    valibot: "npm:^1.5.0"
+    valimock: "npm:^1.6.0"
+    vite-plus: "catalog:"
+    vitest: "catalog:"
+  peerDependencies:
+    "@faker-js/faker": ">=9.0.0"
+    valibot: ^1.5.0
+    valimock: ">=1.6.0"
+  peerDependenciesMeta:
+    "@faker-js/faker":
+      optional: true
+    valimock:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@testing-library/dom@npm:^10.4.2":
   version: 10.4.2
   resolution: "@testing-library/dom@npm:10.4.2"
@@ -2563,33 +2590,6 @@ __metadata:
   checksum: 10/87714d10c13d78202cbc01cdff3595921010a7e40a0b3cd1aa76ea78e5b394c901d5151db76be9d3233938ef26d50e3441c9733e876a497ee6b4cd932f41ab4c
   languageName: node
   linkType: hard
-
-"valicon@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "valicon@workspace:."
-  dependencies:
-    "@faker-js/faker": "npm:^10.6.0"
-    "@saeris/configs": "npm:^1.6.1"
-    "@types/node": "npm:^26.6.6"
-    "@varlock/bumpy": "npm:^1.19.0"
-    "@vitest/coverage-v8": "catalog:"
-    deoptkit: "npm:^0.1.0"
-    typescript: "npm:^6.0.3"
-    valibot: "npm:^1.5.0"
-    valimock: "npm:^1.6.0"
-    vite-plus: "catalog:"
-    vitest: "catalog:"
-  peerDependencies:
-    "@faker-js/faker": ">=9.0.0"
-    valibot: ^1.5.0
-    valimock: ">=1.6.0"
-  peerDependenciesMeta:
-    "@faker-js/faker":
-      optional: true
-    valimock:
-      optional: true
-  languageName: unknown
-  linkType: soft
 
 "valimock@npm:^1.6.0":
   version: 1.6.0
