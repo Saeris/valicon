@@ -1,0 +1,13 @@
+{
+  "extends": "@saeris/configs/tsconfig",
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    // project-local paths live here, not in the shared base
+    "outDir": "./dist",
+    "rootDir": ".",
+    // Stricter than the shared base. New code can adopt these from day one.
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
+  }
+}
