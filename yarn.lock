@@ -535,13 +535,13 @@ __metadata:
     deoptkit: "npm:^0.1.0"
     typescript: "npm:^6.0.3"
     valibot: "npm:^1.5.0"
-    valimock: "npm:^1.6.0"
+    valimock: "npm:^1.7.0"
     vite-plus: "catalog:"
     vitest: "catalog:"
   peerDependencies:
     "@faker-js/faker": ">=9.0.0"
     valibot: ^1.5.0
-    valimock: ">=1.6.0"
+    valimock: ">=1.7.0"
   peerDependenciesMeta:
     "@faker-js/faker":
       optional: true
@@ -2591,15 +2591,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valimock@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "valimock@npm:1.6.0"
+"valimock@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "valimock@npm:1.7.0"
   dependencies:
     randexp: "npm:^0.5.3"
   peerDependencies:
     "@faker-js/faker": ">= 8.0.0"
     valibot: ">= 0.30.0"
-  checksum: 10/a595949c9c269968123ebe5eaa26e7d6c5c19f6178658bada5db389bcd8b27f504f541aad5c6ce035436bcd00f36b69bbb64b3f9dfd27f1d47e80158333c12f3
+  checksum: 10/2e2ed34c6062080e9d42735b40f9641aaa45c108f28920c90337d7adcf20c05edbd3beb1c243e6d9e1cb6900d57352f2a4bdc31cdeb24df86d47b7ad94d0236b
   languageName: node
   linkType: hard
 
