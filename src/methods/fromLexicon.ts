@@ -220,7 +220,7 @@ export function fromLexicon(
   const lines: string[] = [
     `// Generated from the ${doc.id} Lexicon by Valicon. Do not edit.`,
     `import * as v from ${JSON.stringify(config?.valibotImport ?? "valibot")};`,
-    `import * as lex from ${JSON.stringify(config?.valiconImport ?? "valicon")};`
+    `import * as lex from ${JSON.stringify(config?.valiconImport ?? "@saeris/valicon")};`
   ];
   for (const nsid of [...externals].sort()) {
     lines.push(

@@ -489,7 +489,7 @@ function mockLazy(
  * @example
  * ```ts
  * import { Valimock } from "valimock";
- * import { lexiconMocks } from "valicon/valimock";
+ * import { lexiconMocks } from "@saeris/valicon/valimock";
  *
  * const mock = new Valimock({ customMocks: lexiconMocks }).mock(post);
  * ```

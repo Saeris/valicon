@@ -16,17 +16,17 @@ Lexicons are the machine-readable schemas behind every atproto record and API en
 - **Validate** atproto data with Lexicon-aware actions such as `did()`, `handle()`, `atUri()` and `datetime()`, each documented inline so the rules are a hover away in your editor.
 - **`toLexicon()`** turns your Valibot schemas into a publishable Lexicon document.
 - **`fromLexicon()`** generates Valibot source code from existing Lexicons, and **`compileLexicon()`** does the same at runtime without a build step.
-- **`valicon/valimock`** teaches [Valimock](https://github.com/Saeris/valimock) to generate realistic mock records.
+- **`@saeris/valicon/valimock`** teaches [Valimock](https://github.com/Saeris/valimock) to generate realistic mock records.
 
 Everything is a plain function with no side effects, so bundlers only keep what you import.
 
 ## 📦 Installation
 
 ```bash
-vp add valibot valicon
+vp add valibot @saeris/valicon
 ```
 
-Valimock and Faker are optional peer dependencies, only needed for `valicon/valimock`:
+Valimock and Faker are optional peer dependencies, only needed for `@saeris/valicon/valimock`:
 
 ```bash
 vp add -D valimock @faker-js/faker
@@ -40,7 +40,7 @@ Lexicon string formats are Valibot actions. Pipe them after `v.string()` exactly
 
 ```ts
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 
 const follow = v.object({
   $type: v.literal("app.bsky.graph.follow"),
@@ -97,7 +97,7 @@ Name each object definition with `object()` and each record with `record()`, and
 
 ```ts
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 
 const strongRef = lex.object("com.atproto.repo.strongRef", {
   uri: v.pipe(v.string(), lex.atUri()),
@@ -140,7 +140,7 @@ A few Lexicon rules to keep in mind, all of which `toLexicon()` enforces with a 
 
 ```ts
 import { readFileSync, writeFileSync } from "node:fs";
-import { fromLexicon } from "valicon";
+import { fromLexicon } from "@saeris/valicon";
 
 const doc = JSON.parse(
   readFileSync("lexicons/app/bsky/feed/post.json", "utf8")
@@ -154,7 +154,7 @@ When you would rather not commit generated code, `compileLexicon()` builds the s
 
 ```ts
 import * as v from "valibot";
-import { compileLexicons } from "valicon";
+import { compileLexicons } from "@saeris/valicon";
 
 const schemas = compileLexicons(docs);
 const post = schemas["app.bsky.feed.post"].main;
@@ -167,7 +167,7 @@ if (post.kind === "schema") {
 
 ```ts
 import { Valimock } from "valimock";
-import { lexiconMocks } from "valicon/valimock";
+import { lexiconMocks } from "@saeris/valicon/valimock";
 
 const mock = new Valimock({ customMocks: lexiconMocks });
 mock.mock(post);
@@ -204,8 +204,8 @@ Built on [Valibot](https://valibot.dev) by Fabian Hiller, following the design o
 
 Released under the [MIT license][license] © [Drake Costa][personal-website].
 
-[npm_badge]: https://img.shields.io/npm/v/valicon.svg?style=flat
-[npm]: https://www.npmjs.com/package/valicon
+[npm_badge]: https://img.shields.io/npm/v/@saeris/valicon.svg?style=flat
+[npm]: https://www.npmjs.com/package/@saeris/valicon
 [ci_badge]: https://github.com/Saeris/valicon/actions/workflows/ci.yml/badge.svg
 [ci]: https://github.com/Saeris/valicon/actions/workflows/ci.yml
 [viteplus]: https://viteplus.dev/

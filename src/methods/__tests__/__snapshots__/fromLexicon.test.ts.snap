@@ -3,7 +3,7 @@
 exports[`fromLexicon > should generate a definitions module with tokens and known values 1`] = `
 "// Generated from the com.atproto.label.defs Lexicon by Valicon. Do not edit.
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 
 /**
  * Metadata tag on an atproto resource (eg, repo or record).
@@ -198,7 +198,7 @@ export const labelValue = v.pipe(
 exports[`fromLexicon > should generate a query module 1`] = `
 "// Generated from the app.bsky.feed.getPosts Lexicon by Valicon. Do not edit.
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 import * as AppBskyFeedDefs from "./app.bsky.feed.defs.js";
 
 /**
@@ -224,7 +224,7 @@ export const main = lex.query("app.bsky.feed.getPosts", {
 exports[`fromLexicon > should generate a record module 1`] = `
 "// Generated from the app.bsky.feed.post Lexicon by Valicon. Do not edit.
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 import * as AppBskyEmbedExternal from "./app.bsky.embed.external.js";
 import * as AppBskyEmbedGallery from "./app.bsky.embed.gallery.js";
 import * as AppBskyEmbedImages from "./app.bsky.embed.images.js";
@@ -350,7 +350,7 @@ export const main = v.pipe(
 exports[`fromLexicon > should generate a subscription module with nullable fields 1`] = `
 "// Generated from the com.atproto.sync.subscribeRepos Lexicon by Valicon. Do not edit.
 import * as v from "valibot";
-import * as lex from "valicon";
+import * as lex from "@saeris/valicon";
 
 /**
  * A repo operation, ie a mutation of a single record.

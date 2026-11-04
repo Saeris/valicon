@@ -1,5 +1,5 @@
 {
-  "name": "valicon",
+  "name": "@saeris/valicon",
   "version": "0.0.0",
   "description": "Valibot schemas, codegen, and mocking utilities for AT Protocol Lexicons",
   "keywords": [
