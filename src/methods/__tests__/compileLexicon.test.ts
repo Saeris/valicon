@@ -9,7 +9,26 @@ import {
   sampleCid,
   samplePost
 } from "../../__tests__/fixtures/samples.js";
+import type { LexiconDoc } from "../../types/index.js";
 import { compileLexicon, compileLexicons } from "../compileLexicon.js";
+
+const endpoint: LexiconDoc = {
+  lexicon: 1,
+  id: "com.example.endpoint",
+  defs: { main: { type: "query" } }
+};
+
+function mainSchema(
+  compiled: Record<string, Record<string, unknown>>,
+  nsid: string
+): v.GenericSchema {
+  const main = compiled[nsid]?.main;
+  if (typeof main !== "object" || main === null || !("kind" in main)) {
+    throw new Error(`${nsid} did not compile`);
+  }
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  return main as v.GenericSchema;
+}
 
 describe("compileLexicon", () => {
   const compiled = compileLexicons(readLexiconFixtures(), {
@@ -131,6 +150,68 @@ describe("compileLexicon", () => {
     }
     expect(() => v.parse(main, samplePost)).toThrow(
       'Unresolved reference "app.bsky.richtext.facet"'
+    );
+  });
+
+  it("should reject references to XRPC definitions", () => {
+    // Queries, procedures and subscriptions describe endpoints, not data, so
+    // nothing can reference them, whether locally or from another document.
+    const local: LexiconDoc = {
+      lexicon: 1,
+      id: "com.example.local",
+      defs: {
+        main: { type: "query" },
+        thing: {
+          type: "object",
+          properties: { ref: { type: "ref", ref: "#main" } }
+        }
+      }
+    };
+    expect(() => compileLexicon(local)).toThrow(
+      'Cannot reference the XRPC definition "#main"'
+    );
+    const remote: LexiconDoc = {
+      lexicon: 1,
+      id: "com.example.remote",
+      defs: {
+        main: {
+          type: "object",
+          properties: { ref: { type: "ref", ref: "com.example.endpoint" } }
+        }
+      }
+    };
+    const main = mainSchema(
+      compileLexicons([endpoint, remote]),
+      "com.example.remote"
+    );
+    expect(() => v.parse(main, { ref: {} })).toThrow(
+      'Cannot reference the XRPC definition "com.example.endpoint"'
+    );
+  });
+
+  it("should fail for references that cannot be resolved", () => {
+    const doc: LexiconDoc = {
+      lexicon: 1,
+      id: "com.example.dangling",
+      defs: {
+        main: {
+          type: "object",
+          properties: {
+            missingDoc: { type: "ref", ref: "com.example.missing" },
+            missingDef: { type: "ref", ref: "com.example.endpoint#missing" }
+          }
+        }
+      }
+    };
+    const main = mainSchema(
+      compileLexicons([endpoint, doc]),
+      "com.example.dangling"
+    );
+    expect(() => v.parse(main, { missingDoc: {} })).toThrow(
+      'Unresolved reference "com.example.missing"'
+    );
+    expect(() => v.parse(main, { missingDef: {} })).toThrow(
+      'Unresolved reference "com.example.endpoint#missing"'
     );
   });
 

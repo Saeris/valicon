@@ -31,6 +31,11 @@ export default defineConfig({
     include: ["**/*.{test,spec}.{ts,tsx}"],
     exclude: ["**/node_modules/**", "**/dist/**"],
     environment: "node",
-    passWithNoTests: true
+    passWithNoTests: true,
+    coverage: {
+      include: ["src/**"],
+      exclude: ["src/**/__tests__/**"],
+      thresholds: { 100: true }
+    }
   }
 });

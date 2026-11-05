@@ -32,6 +32,14 @@ describe("decodedBytes", () => {
     });
   });
 
+  it("should leave type errors to the string schema", () => {
+    // Valibot keeps running validations after the schema failed, so the
+    // actions must not count the bytes of a value that is not a string.
+    const schema = v.pipe(v.string(), minDecodedBytes(1), maxDecodedBytes(2));
+    const result = v.safeParse(schema, 123);
+    expect(result.issues?.map((issue) => issue.type)).toStrictEqual(["string"]);
+  });
+
   it("should enforce the maximum decoded length", () => {
     const schema = v.pipe(v.string(), maxDecodedBytes(2));
     expect(v.safeParse(schema, "AAA=").success).toBe(true);

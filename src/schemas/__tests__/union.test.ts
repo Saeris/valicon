@@ -94,6 +94,49 @@ describe("union", () => {
     expect(getUnionOptions(union([v.lazy(() => view)]))).toHaveLength(1);
   });
 
+  it("should accept every object schema flavor as an option", () => {
+    const strict = v.strictObject({ $type: v.literal("com.example.a") });
+    const rest = v.objectWithRest(
+      { $type: v.literal("com.example.b") },
+      v.unknown()
+    );
+    const schema = union([strict, rest], { closed: true });
+    expect(v.parse(schema, { $type: "com.example.a" })).toStrictEqual({
+      $type: "com.example.a"
+    });
+    expect(v.parse(schema, { $type: "com.example.b", extra: 1 })).toStrictEqual(
+      { $type: "com.example.b", extra: 1 }
+    );
+    expect(getUnionOptions(schema)).toHaveLength(2);
+  });
+
+  it("should accept any variant in an open union without options", () => {
+    // The Lexicon spec allows an open union with an empty `refs` list as a
+    // placeholder for variants that will be defined later.
+    const anything = union([]);
+    expect(v.parse(anything, { $type: "com.example.later" })).toStrictEqual({
+      $type: "com.example.later"
+    });
+    expect(v.safeParse(anything, {}).success).toBe(false);
+  });
+
+  it("should fail loudly for lazy options that are not object schemas", () => {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const text = v.lazy(() => v.string()) as never;
+    expect(() => v.parse(union([text]), { $type: "x" })).toThrow(
+      "Union options must be object schemas"
+    );
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const nothing = v.lazy(() => null as never) as never;
+    expect(() => v.parse(union([nothing]), { $type: "x" })).toThrow(
+      "Lazy union options must resolve to a schema"
+    );
+  });
+
+  it("should report no options for values that are not schemas", () => {
+    expect(getUnionOptions({})).toStrictEqual([]);
+  });
+
   it("should fail loudly for options without a $type literal", () => {
     const broken = union([v.looseObject({ name: v.string() })]);
     expect(() => v.parse(broken, { name: "x" })).toThrow(

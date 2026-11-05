@@ -103,10 +103,14 @@ interface Environment {
 function lookup(callee: string): AnyFunction {
   const [namespace, name] = callee.split(".");
   const table: object = namespace === "v" ? v : LEX;
+  // Callees are produced by `buildLexicon`, which only names functions that
+  // exist, so the guards below never fire.
+  /* istanbul ignore next */
   const fn: unknown =
     name !== void 0 && Object.hasOwn(table, name)
       ? Reflect.get(table, name)
       : null;
+  /* istanbul ignore next */
   if (typeof fn !== "function") {
     throw new Error(`Unknown function "${callee}"`);
   }
@@ -141,6 +145,9 @@ function isCompiledDefinition(value: unknown): value is CompiledDefinition {
  */
 function localSchema(environment: Environment, name: string): v.GenericSchema {
   const definition = environment.locals.get(name);
+  // `buildLexicon` rejects unknown local references and orders definitions
+  // so that dependencies are evaluated first.
+  /* istanbul ignore next */
   if (definition === void 0) {
     throw new Error(`Unresolved reference "#${name}"`);
   }
@@ -194,6 +201,7 @@ function evaluate(expr: Expr, environment: Environment): unknown {
         return definition;
       });
     }
+    /* istanbul ignore next */
     default: {
       throw new Error("Unknown expression");
     }
@@ -236,6 +244,8 @@ export function compileLexicon(
   };
   for (const { name, expr } of buildLexicon(doc, config).defs) {
     const definition = evaluate(expr, environment);
+    // Every definition expression evaluates to a schema or an XRPC definition.
+    /* istanbul ignore next */
     if (!isCompiledDefinition(definition)) {
       throw new Error(`Definition "${name}" did not compile to a schema`);
     }

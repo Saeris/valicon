@@ -231,6 +231,8 @@ function isRecordKeyType(value: string): value is RecordKeyType {
  */
 function splitOuter(schema: GenericSchema): SplitSchema {
   const [base, ...rest] = getPipeItems(schema);
+  // The first pipe item of a Valibot pipe is always a schema.
+  /* istanbul ignore next */
   return {
     base: isSchema(base) ? base : schema,
     actions: rest.filter(isAction)
@@ -269,10 +271,13 @@ function resolveLazy(schema: GenericSchema): GenericSchema {
   let resolved = schema;
   while (resolved.type === "lazy") {
     const getter = prop(resolved, "getter");
+    // A Valibot lazy schema always has a getter that returns a schema.
+    /* istanbul ignore next */
     if (typeof getter !== "function") {
       return resolved;
     }
     const next: unknown = getter(null);
+    /* istanbul ignore next */
     if (!isSchema(next)) {
       return resolved;
     }
@@ -440,6 +445,9 @@ function convertUnion(
   const refs = getUnionOptions(split.base).map((option) => {
     const resolved = resolveUnionOption(option);
     const name = getTypeName(resolved);
+    // `union()` already rejects options without a `$type` literal when the
+    // options are read above.
+    /* istanbul ignore next */
     if (name === null) {
       throw new Error("Union options must declare a `$type` literal");
     }
@@ -553,6 +561,8 @@ function convertString(
  * @returns The known values, if any.
  */
 function getKnownValues(metadata: unknown): readonly string[] | null {
+  // Valibot metadata is always an object.
+  /* istanbul ignore else */
   if (typeof metadata === "object" && metadata !== null) {
     const lexicon = prop(metadata, "lexicon");
     if (typeof lexicon === "object" && lexicon !== null) {
@@ -635,6 +645,8 @@ function convertArray(
 ): LexArray {
   const item = prop(split.base, "item");
   let items: LexArrayItem = { type: "unknown" };
+  // A Valibot array schema always carries an item schema.
+  /* istanbul ignore else */
   if (isSchema(item)) {
     const converted = convertValue(item, key, context);
     if (converted.type === "array") {
@@ -815,6 +827,8 @@ function convertInline(
     }
     case "picklist": {
       const options = prop(base, "options");
+      // A Valibot picklist always carries an options array.
+      /* istanbul ignore else */
       if (Array.isArray(options)) {
         if (options.every((option) => typeof option === "string")) {
           return withDescription(
@@ -915,6 +929,8 @@ function unwrapProperty(schema: GenericSchema): UnwrappedProperty {
       defaultValue = typeof default_ === "function" ? default_() : default_;
     }
     const wrapped = prop(current, "wrapped");
+    // Valibot wrapper schemas always wrap a schema.
+    /* istanbul ignore next */
     if (!isSchema(wrapped)) {
       break;
     }
@@ -1293,6 +1309,8 @@ function inferId(
     }
     if (getLexiconMetadata(definition)?.type === "token") {
       const literal = prop(splitDeep(definition).base, "literal");
+      // `token()` is built on a string literal.
+      /* istanbul ignore else */
       if (typeof literal === "string") {
         return splitLexRef(literal).nsid;
       }
