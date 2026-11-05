@@ -172,6 +172,7 @@ function print(expr: Expr, indent: number): string {
       }
       return `${expr.callee}(\n${args.map((arg) => inner + arg).join(",\n")}\n${pad})`;
     }
+    /* istanbul ignore next */
     default: {
       throw new Error("Unknown expression");
     }

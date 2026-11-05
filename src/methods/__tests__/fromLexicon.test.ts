@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { readLexiconFixture } from "../../__tests__/fixtures/lexicons.js";
+import {
+  count,
+  kitchenSink,
+  syntheticLexicons
+} from "../../__tests__/fixtures/synthetic.js";
+import type { LexiconDoc } from "../../types/index.js";
 import { fromLexicon, toIdentifier, toImportAlias } from "../fromLexicon.js";
 
 describe("fromLexicon", () => {
@@ -51,6 +57,47 @@ describe("fromLexicon", () => {
       'import * as ComAtprotoRepoStrongRef from "@lexicons/com/atproto/repo/strongRef";'
     );
     expect(code).toContain('{ key: "tid", mode: "strict" }');
+  });
+
+  it.each(syntheticLexicons.map((doc): [string, LexiconDoc] => [doc.id, doc]))(
+    "should generate a module for %s",
+    (_nsid, doc) => {
+      expect(fromLexicon(doc)).toContain("export const main");
+    }
+  );
+
+  it("should quote property names that are not identifiers", () => {
+    expect(fromLexicon(kitchenSink)).toContain('"content-type": ');
+  });
+
+  it("should use strict objects for anonymous objects when asked", () => {
+    // Params and body objects have no `$type`, so they are plain Valibot
+    // objects whose flavor follows the object mode.
+    expect(fromLexicon(count, { objectMode: "strict" })).toContain(
+      "v.strictObject("
+    );
+    expect(fromLexicon(count, { objectMode: "strip" })).toContain("v.object(");
+    expect(fromLexicon(count)).toContain("v.looseObject(");
+  });
+
+  it("should reject documents Valicon cannot express", () => {
+    const doc = (main: unknown): LexiconDoc =>
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      ({ lexicon: 1, id: "com.example.bad", defs: { main } }) as LexiconDoc;
+    const withProperty = (property: unknown): LexiconDoc =>
+      doc({ type: "object", properties: { x: property } });
+    expect(() =>
+      fromLexicon(withProperty({ type: "ref", ref: "#nope" }))
+    ).toThrow('Unknown reference "#nope"');
+    expect(() =>
+      fromLexicon(withProperty({ type: "string", format: "ipv4" }))
+    ).toThrow('Unknown string format "ipv4"');
+    expect(() => fromLexicon(withProperty({ type: "float" }))).toThrow(
+      'Unsupported Lexicon type "float"'
+    );
+    expect(() => fromLexicon(doc({ type: "float" }))).toThrow(
+      'Unsupported Lexicon definition type "float"'
+    );
   });
 
   it("should produce safe identifiers", () => {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readLexiconFixtures } from "../../__tests__/fixtures/lexicons.js";
 import { resolvePlaceholder } from "../../__tests__/fixtures/samples.js";
+import { syntheticLexicons } from "../../__tests__/fixtures/synthetic.js";
 import type { LexiconDoc } from "../../types/index.js";
 import { compileLexicons } from "../compileLexicon.js";
 import { toLexicon } from "../toLexicon.js";
@@ -50,6 +51,22 @@ describe("lexicon round trip", () => {
       const defs = compiled[nsid]!;
       expect(
         toLexicon(defs, {
+          id: nsid,
+          ...(doc.description ? { description: doc.description } : {})
+        })
+      ).toEqual(normalize(doc, nsid));
+    }
+  );
+
+  // The synthetic documents cover the Lexicon features the published
+  // fixtures happen not to use, so the guarantee extends to the whole spec.
+  const synthetic = compileLexicons(syntheticLexicons);
+
+  it.each(syntheticLexicons.map((doc): [string, LexiconDoc] => [doc.id, doc]))(
+    "%s",
+    (nsid, doc) => {
+      expect(
+        toLexicon(synthetic[nsid]!, {
           id: nsid,
           ...(doc.description ? { description: doc.description } : {})
         })

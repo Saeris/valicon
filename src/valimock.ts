@@ -246,6 +246,28 @@ export function mockBytes(faker: Faker, minLength = 0, maxLength = 64): string {
 }
 
 /**
+ * The length of the unpadded base64 encoding of `bytes` raw bytes.
+ *
+ * @param bytes The number of raw bytes.
+ *
+ * @returns The number of base64 characters.
+ */
+function base64Length(bytes: number): number {
+  return Math.ceil((bytes * 4) / 3);
+}
+
+/**
+ * The number of raw bytes that fit in `characters` unpadded base64 characters.
+ *
+ * @param characters The number of base64 characters.
+ *
+ * @returns The number of raw bytes.
+ */
+function decodedLength(characters: number): number {
+  return Math.floor((characters * 3) / 4);
+}
+
+/**
  * Capitalizes the first character of a word.
  *
  * @param word The word.
@@ -316,7 +338,14 @@ export const stringActions: Readonly<Record<string, StringActionHandler>> = {
   },
   min_decoded_bytes: (ctx, action) => {
     ctx.format = "bytes";
-    ctx.custom.minDecodedBytes = requirementOf(action);
+    const minDecodedBytes = requirementOf(action);
+    ctx.custom.minDecodedBytes = minDecodedBytes;
+    // Valimock caps every string at `ctx.bounds.max` characters. A Lexicon
+    // minimum larger than that cap fits would otherwise be unsatisfiable, so
+    // widen the bound to the base64 length of the minimum.
+    if (typeof minDecodedBytes === "number") {
+      ctx.bounds.max = Math.max(ctx.bounds.max, base64Length(minDecodedBytes));
+    }
   },
   max_decoded_bytes: (ctx, action) => {
     ctx.format = "bytes";
@@ -346,9 +375,17 @@ export const stringFormats: Readonly<Record<string, StringFormatGenerator>> = {
       typeof ctx.custom.minDecodedBytes === "number"
         ? ctx.custom.minDecodedBytes
         : 0,
-      typeof ctx.custom.maxDecodedBytes === "number"
-        ? ctx.custom.maxDecodedBytes
-        : 64
+      // A Lexicon `maxLength` on bytes is an upper bound, not a target.
+      // Mocks stay within Valimock's string bound (128 characters unless the
+      // schema says otherwise) so a 2 MB CAR file limit yields a few dozen
+      // bytes rather than megabytes of base64 that Valimock rejects and
+      // regenerates until its retry budget runs out.
+      Math.min(
+        typeof ctx.custom.maxDecodedBytes === "number"
+          ? ctx.custom.maxDecodedBytes
+          : 64,
+        decodedLength(ctx.bounds.max)
+      )
     ),
   cid: (ctx) => mockCid(ctx.faker),
   datetime: (ctx) => mockDatetime(ctx.faker),

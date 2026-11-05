@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import * as v from "valibot";
 import { readLexiconFixture } from "../../__tests__/fixtures/lexicons.js";
 import {
@@ -11,7 +11,7 @@ import {
   language,
   uri
 } from "../../actions/index.js";
-import { procedure, query } from "../../definitions/index.js";
+import { procedure, query, subscription } from "../../definitions/index.js";
 import {
   blob,
   object,
@@ -325,6 +325,271 @@ describe("toLexicon", () => {
     expect(() => toLexicon(v.object({ a: v.string() }))).toThrow(
       "Unable to infer the Lexicon NSID"
     );
+  });
+
+  it("should convert the constraints the published fixtures never use", () => {
+    const shared = v.object({ city: v.string() });
+    const doc = toLexicon(
+      record("com.example.kitchen", {
+        slug: v.pipe(
+          v.string(),
+          v.nonEmpty(),
+          v.minBytes(2),
+          v.minGraphemes(1)
+        ),
+        status: v.pipe(v.string(), v.values(["draft", "live"])),
+        kind: v.pipe(v.string(), v.value("note")),
+        priority: v.pipe(v.number(), v.integer(), v.values([1, 2, 3])),
+        version: v.pipe(v.number(), v.integer(), v.value(1)),
+        one: v.literal(1),
+        yes: v.pipe(v.boolean(), v.value(true)),
+        level: v.picklist([1, 2]),
+        anything: v.any(),
+        bag: v.record(v.string(), v.unknown()),
+        strict: v.strictObject({ a: v.string() }),
+        loose: v.looseObject({ b: v.string() }),
+        home: shared,
+        work: shared,
+        name: v.optional(v.string(), () => "anon"),
+        tags: v.pipe(v.array(v.string()), v.nonEmpty())
+      })
+    );
+    expect(doc.defs).toEqual({
+      main: {
+        type: "record",
+        record: {
+          type: "object",
+          required: [
+            "slug",
+            "status",
+            "kind",
+            "priority",
+            "version",
+            "one",
+            "yes",
+            "level",
+            "anything",
+            "bag",
+            "strict",
+            "loose",
+            "home",
+            "work",
+            "tags"
+          ],
+          properties: {
+            slug: { type: "string", minLength: 2, minGraphemes: 1 },
+            status: { type: "string", enum: ["draft", "live"] },
+            kind: { type: "string", const: "note" },
+            priority: { type: "integer", enum: [1, 2, 3] },
+            version: { type: "integer", const: 1 },
+            one: { type: "integer", const: 1 },
+            yes: { type: "boolean", const: true },
+            level: { type: "integer", enum: [1, 2] },
+            anything: { type: "unknown" },
+            bag: { type: "unknown" },
+            strict: { type: "ref", ref: "#strict" },
+            loose: { type: "ref", ref: "#loose" },
+            // A schema used twice is hoisted once and referenced twice.
+            home: { type: "ref", ref: "#home" },
+            work: { type: "ref", ref: "#home" },
+            name: { type: "string", default: "anon" },
+            tags: { type: "array", items: { type: "string" }, minLength: 1 }
+          }
+        }
+      },
+      strict: {
+        type: "object",
+        required: ["a"],
+        properties: { a: { type: "string" } }
+      },
+      loose: {
+        type: "object",
+        required: ["b"],
+        properties: { b: { type: "string" } }
+      },
+      home: {
+        type: "object",
+        required: ["city"],
+        properties: { city: { type: "string" } }
+      }
+    });
+  });
+
+  it("should suffix hoisted names that collide", () => {
+    // Two different anonymous objects under the same property name must
+    // become two definitions, not one overwriting the other.
+    const doc = toLexicon(
+      record("com.example.thing", {
+        first: v.object({ item: v.object({ a: v.string() }) }),
+        second: v.object({ item: v.object({ b: v.string() }) })
+      })
+    );
+    expect(Object.keys(doc.defs)).toStrictEqual([
+      "main",
+      "first",
+      "second",
+      "item",
+      "item2"
+    ]);
+    expect(doc.defs.first).toMatchObject({
+      properties: { item: { type: "ref", ref: "#item" } }
+    });
+    expect(doc.defs.second).toMatchObject({
+      properties: { item: { type: "ref", ref: "#item2" } }
+    });
+  });
+
+  it("should infer the NSID from a token", () => {
+    expect(
+      toLexicon({ confirmed: token("com.atproto.label.defs#confirmed") }).id
+    ).toBe("com.atproto.label.defs");
+  });
+
+  it("should fail loudly for more schemas Lexicon cannot express", () => {
+    const thing = (entries: v.ObjectEntries) =>
+      record("com.example.thing", entries);
+    const cases: [v.ObjectEntries, string][] = [
+      [
+        { grid: v.array(v.array(v.string())) },
+        "Lexicon arrays cannot be nested."
+      ],
+      [
+        { list: v.pipe(v.array(v.string()), v.includes("a")) },
+        'The "includes" action cannot be converted'
+      ],
+      [{ big: v.literal(1n) }, 'The "literal" schema cannot be converted'],
+      [
+        { mixed: v.picklist(["a", 1]) },
+        'The "picklist" schema cannot be converted'
+      ],
+      [{ when: v.date() }, 'The "date" schema cannot be converted'],
+      [
+        { kind: token("com.example.defs#kind") },
+        "Tokens cannot be used as properties"
+      ],
+      [
+        { embed: v.variant("$type", [v.object({ $type: v.literal("a") })]) },
+        'Lexicon unions must be created with the "union" function'
+      ]
+    ];
+    for (const [entries, message] of cases) {
+      expect(() => toLexicon(thing(entries))).toThrow(message);
+    }
+    expect(() =>
+      toLexicon(
+        v.pipe(v.string(), v.metadata({ lexicon: { type: "record" } })),
+        { id: "com.example.thing" }
+      )
+    ).toThrow("Records must wrap an object schema.");
+    expect(() =>
+      toLexicon(
+        { embed: union([v.object({ $type: v.literal("com.example.a") })]) },
+        { id: "com.example.thing" }
+      )
+    ).toThrow('The definition "embed" cannot be a reference or union.');
+  });
+
+  it("should report actions whose requirement is not what Lexicon expects", () => {
+    // Another tool could build a schema that reuses Valibot action types
+    // with a different requirement shape. Those must be reported rather
+    // than silently dropped from the document.
+    const bogus = (type: string) =>
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      ({ kind: "validation", type, requirement: Symbol("bogus") }) as never;
+    const cases: [v.GenericSchema, string][] = [
+      [v.string(), "min_bytes"],
+      [v.string(), "max_bytes"],
+      [v.string(), "min_graphemes"],
+      [v.string(), "max_graphemes"],
+      [v.string(), "values"],
+      [v.string(), "value"],
+      [v.pipe(v.number(), v.integer()), "min_value"],
+      [v.pipe(v.number(), v.integer()), "max_value"],
+      [v.pipe(v.number(), v.integer()), "values"],
+      [v.pipe(v.number(), v.integer()), "value"],
+      [v.array(v.string()), "min_length"],
+      [v.array(v.string()), "max_length"]
+    ];
+    for (const [schema, type] of cases) {
+      expect(() =>
+        toLexicon(
+          record("com.example.thing", { x: v.pipe(schema, bogus(type)) })
+        )
+      ).toThrow(`The "${type}" action cannot be converted`);
+    }
+  });
+
+  it("should describe parameters and allow unknown array items", () => {
+    const doc = toLexicon(
+      query("com.example.q", {
+        parameters: v.pipe(
+          v.object({ raw: v.array(v.unknown()) }),
+          v.description("Filters.")
+        )
+      })
+    );
+    expect(doc.defs.main).toEqual({
+      type: "query",
+      parameters: {
+        type: "params",
+        description: "Filters.",
+        required: ["raw"],
+        properties: { raw: { type: "array", items: { type: "unknown" } } }
+      }
+    });
+  });
+
+  it("should fail loudly for XRPC shapes Lexicon cannot express", () => {
+    const params = (entries: v.ObjectEntries) =>
+      query("com.example.q", { parameters: v.object(entries) });
+    expect(() => toLexicon(params({ since: v.nullable(v.string()) }))).toThrow(
+      "XRPC parameters cannot be nullable."
+    );
+    expect(() =>
+      toLexicon(params({ tags: v.optional(v.array(v.string()), () => []) }))
+    ).toThrow(
+      'Only string, integer and boolean properties can have a default value, not "tags".'
+    );
+    expect(() =>
+      toLexicon(params({ filter: v.object({ a: v.string() }) }))
+    ).toThrow(
+      'XRPC parameters can only be primitives or arrays of primitives, not "filter".'
+    );
+    expect(() =>
+      toLexicon(query("com.example.q", { parameters: v.string() }))
+    ).toThrow("XRPC parameters must be an object schema.");
+    expect(() =>
+      toLexicon(
+        query("com.example.q", {
+          output: { encoding: "application/json", schema: v.string() }
+        })
+      )
+    ).toThrow(
+      'XRPC bodies must be an object, a reference or a union schema, not "output".'
+    );
+    expect(() =>
+      toLexicon(
+        subscription("com.example.s", {
+          message: { schema: v.object({ a: v.string() }) }
+        })
+      )
+    ).toThrow("Subscription messages must be a union schema.");
+  });
+
+  it("should stay silent when errorMode is ignore", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const doc = toLexicon(
+        record("com.example.thing", { ratio: v.number() }),
+        {
+          errorMode: "ignore"
+        }
+      );
+      expect(doc.defs.main).toMatchObject({ type: "record" });
+      expect(warn).not.toHaveBeenCalled();
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it("should only warn when errorMode is warn", () => {
